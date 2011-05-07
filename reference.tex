@@ -1,0 +1,236 @@
+\documentclass[a4paper,oneside,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\linespread{1.2}
+
+%\usepackage{eulervm}
+
+\usepackage[landscape,left=.5cm,right=.5cm,top=1.5cm,bottom=.5cm]{geometry}
+
+\setlength{\columnseprule}{0.25pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RE,RO]{ACM ICPC Reference, page \bfseries\thepage}
+\fancyhead[LE,LO]{Institute of Mathematics and Statistics of University of São Paulo}
+
+\usepackage{listings}
+
+\usepackage{sectsty}
+\sectionfont{\normalsize}
+
+\newcommand{\SECTION}[2]{\section*{#1} \addcontentsline{toc}{subsection}{#1} #2 \begin{center}\rule{400pt}{0.25pt}\end{center}}
+\newcommand{\sourcefile}[1]{\begin{center}\textbf{#1}\end{center}\lstinputlisting{src/#1}}
+\newcommand{\Csourcefile}[1]{\begin{center}\textbf{#1.cpp}\end{center}\lstinputlisting[language=C++]{src/#1.cpp}}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\then}{\Longrightarrow}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\brackets}[1]{\left[#1\right]}
+\newcommand{\braces}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\nequiv}{\not\equiv}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\degree}{\ensuremath{^\circ}}
+\newcommand{\defun}[5] {
+  \begin{array}{rrcl}
+    #1: & #2 & \longrightarrow & #3 \\
+        & #4 & \longmapsto & #5
+  \end{array}
+}
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\epsilon}{\varepsilon}
+
+\newcommand{\stirfst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirsnd}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+\newcommand{\bell}[1]{\mathcal B_{#1}}
+\newcommand{\seg}[1]{\overline{#1}}
+
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+
+\title{ACM ICPC Reference}
+\author{Institute of Mathematics and Statistics of University of São Paulo}
+
+\begin{document}
+\scriptsize{}
+\maketitle
+\thispagestyle{fancy}
+
+\tableofcontents
+
+% Mathematics
+
+\SECTION{Arbitrary Precision Integers}{
+	\Csourcefile{bigint}
+}
+
+% TODO fatoração LU
+
+% Number Theory
+
+\SECTION{Extended Euclid's Algorithm (Bézout's Theorem)}{
+	\Csourcefile{bezout}
+}
+
+\SECTION{62-bit Modular Multiplication / Exponentiation}{
+	\Csourcefile{mulmod}
+	\Csourcefile{expmod}
+}
+
+\SECTION{Miller--Rabin (Primality test)}{
+	\Csourcefile{isprime}
+}
+
+\SECTION{Pollard's Rho (Factorization)}{
+	\Csourcefile{rho}
+}
+
+% Combinatory
+
+\SECTION{Catalan Numbers} {
+	$C_n$ is:
+	\begin{itemize}
+		\item The number of balanced expressions built from $n$ pairs of parentheses.
+		\item The number of paths in an $n\times n$ grid that stays on or below the diagonal.
+		\item The number of words of size $2n$ over the alphabet $\Sigma = \{a,b\}$ having an equal number of
+			  $a$ symbols and $b$ symbols containing no prefix with more $a$ symbols than $b$ symbols.
+	\end{itemize}
+
+	It holds that:
+	\[ C_0 = 1, C_{n+1} = \sum_{k=0}^n C_k C_{n-k} \]
+	\[ C_n = \binom{2n}n - \binom{2n}{n-1} = \frac 1{n+1}\binom{2n}n = \frac{(2n)!}{n!(n+1)!} \]
+}
+
+\SECTION{Stirling Numbers of the First Kind} {
+	$\ds \stirfst nk$ is:
+	\begin{itemize}
+		\item The number of ways to split $n$ elements into $k$ ordered partitions up to a
+			  permutation of the partitions among themselves and rotations within the partitions.
+		\item The number of digraphs with $n$ vertices and $k$ cycles such that each vertex
+			  has in and out degree of 1.
+	\end{itemize}
+
+	It holds that:
+	\[ \stirfst n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
+	   \stirfst 0k = \begin{cases}1,& k=0 \\ 0,& k\neq 0\end{cases} \]
+	\[ \stirfst nk = (n-1)\stirfst{n-1}k + \stirfst{n-1}{k-1} \]
+	\[ \stirfst n1 = (n-1)! \]
+	\[ \stirfst n{n-1} = \binom n2 \]
+	\[ \stirfst n{n-2} = \frac 14 (3n-1) \binom n3 \]
+	\[ \stirfst n{n-3} = \binom n2 \binom n4 \]
+	\[ \stirfst n2 = (n-1)! H_{n-1} \]
+	\[ \stirfst n3 = \frac 12 (n-1)! \left( H_{n-1}^2 - H_{n-1}^{(2)} \right) \]
+	\[ H_n = \sum_{j=1}^n \frac 1j,\quad H_n^{(k)} = \sum_{j=1}^n \frac 1{j^k} \]
+	\[ \sum_{k=0}^n \stirfst nk = n! \]
+	\[ \sum_{j=k}^n \stirfst nj \binom jk = \stirfst{n+1}{k+1} \]
+}
+
+\SECTION{Stirling Numbers of the Second Kind} {
+	$\ds \stirsnd nk$ is the number of ways to partition an $n$-set into exactly $k$ non-empty disjoint subsets
+	up to a permutation of the sets among themselves. It holds that:
+
+	\[ \stirsnd n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
+	   \stirsnd n1 = \stirsnd nn = 1 \]
+	\[ \stirsnd nk = \stirsnd{n-1}{k-1} + k\stirsnd{n-1}k \]
+	\[ \stirsnd nk \bmod 2 = \begin{cases}
+					0,& (n-k)\&\floor{\frac{k-1}2}\neq 0 \\
+					1,& \text{otherwise}
+				 \end{cases}, \]
+	where $\&$ is the C bitwise ``and'' operator.
+
+	\[ \stirsnd n2 = 2^{n-1} - 1 \]
+	\[ \stirsnd n{n-1} = \binom n2 \]
+	\[ \stirsnd nk = \frac 1{k!} \sum_{j=0}^k(-1)^{k-j} \binom kj j^n \]
+}
+
+\SECTION{Bell Numbers} {
+	$\bell n$ is the number of equivalence relations on an $n$-set or, alternatively, the number of
+	partitions of an $n$-set. It holds that:
+
+	\[ \bell n = \sum_{k=0}^n \stirsnd nk \]
+	\[ \bell{n+1} = \sum_{k=0}^n\binom nk \bell k \]
+	\[ \bell n = \frac 1e \sum_{k=0}^\infty \frac{k^n}{k!} \]
+	\[ \bell{n+p} \equiv \bell n + \bell{n+1} \pmod p \]
+}
+
+\SECTION{The Twelvefold Way} {
+	Let $A$ be a set of $m$ balls and $B$ be a set of $n$ boxes. The following table provides methods
+	to compute the number of equivalent functions $f:A\to B$ satisfying specific constraints.
+	
+	\begin{tabular}{|c|c||c|c|c|}
+		\hline
+		Balls & Boxes & Any & Injective & Surjective \\
+		\hline\hline
+		$\nequiv$ & $\nequiv$ & $\ds n^m$ & $\ds\frac{n!}{(n-m)!}$ & $\ds n!\stirsnd mn$ \\
+		\hline
+		$\nequiv$ & $\equiv$ & $\ds \sum_{k=0}^n \stirsnd mk$ & $\ds\delta_{m\leqslant n}$ &
+			$\ds\stirsnd mn$ \\
+		\hline
+		$\equiv$ & $\nequiv$ & $\ds\binom{m+n-1}{m}$ & $\ds\binom nm$ & $\ds\binom{m-1}{n-1}$ \\
+		\hline
+		$\equiv$ & $\equiv$ & {\bf(*)}$\ds\sum_{k=0}^n p(m,k)$ & $\ds\delta_{m\leqslant n}$ & 
+			{\bf(**)}$\ds p(m,n)$ \\
+		\hline
+	\end{tabular}
+	
+	{\bf(**)} is a definition and both {\bf(*)} and {\bf(**)} are very hard to compute. So do not
+	try to.
+}
+
+\SECTION{Lucca's Theorem} {
+	Let $n,k,p\in\NN$ and $p$ be a prime number. Then
+	\[ \binom nk \equiv \prod_{j=0}^\infty \binom{n_j}{k_j} \pmod p, \]
+	where $n_j$ and $k_j$ are the $j$-th digits of the numbers $n$ and $k$ in base
+	$p$, respectively.
+}
+
+% TODO desarranjo (atol)
+
+% Strings
+
+\SECTION{Knuth--Morris--Pratt Algorithm}{
+	\Csourcefile{kmp}
+}
+
+\SECTION{Rabin--Karp Algorithm}{
+	\Csourcefile{rabinkarp}
+}
+
+\SECTION{Aho--Corasick Algorithm}{
+	\Csourcefile{ahocorasick}
+}
+
+\SECTION{Suffix Array and Longest Common Prefix}{
+	\Csourcefile{suffixarray}
+}
+
+% Geometry
+
+\SECTION{Graham's Scan Algorithm}{
+	\Csourcefile{graham}
+}
+
+\SECTION{Minimum Enclosing Disc}{
+	\Csourcefile{mindisc}
+}
+
+% Graphs
+
+\end{document}
+
