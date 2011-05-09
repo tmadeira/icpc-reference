@@ -1,7 +1,7 @@
 NAME=reference
 
 view: $(NAME).pdf
-	evince $(NAME).pdf
+	evince $(NAME).pdf &
 
 $(NAME).pdf: $(NAME).tex src/*.cpp
 	pdflatex $(NAME).tex
