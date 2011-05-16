@@ -1,41 +1,18 @@
-#line 6 "Symmetry.cpp"
-#include<cstdio>
-#include<cstdlib>
-#include<string>
-#include<cstring>
-#include<cmath>
-#include<set>
-#include<map>
-#include<queue>
-#include<sstream>
-#include<algorithm>
-#include<iostream>
-using namespace std;
-
-#define FOR(A,C) for(int A = 0; A < C; A++)
-#define vi vector<int>
-#define pii pair<long long,long long>
-#define pb push_back
-#define sz(x) (int) x.size()
-#define ll long long
-
+typedef long long ll;
 struct RETA {
 	ll A,B,C;
-
 	bool operator==( const RETA & x ) {
 		if(x.A != A) return 0;
 		if(x.B != B) return 0;
 		if(x.C != C) return 0;
 		return 1;
 	}
-
 	bool operator < (const RETA & x) const {
 		if(A != x.A) return A < x.A;
 		if(B != x.B) return B < x.B;
 		if(C != x.C) return C < x.C;
 		return 0;
 	}
-
 };
 
 int Inter(RETA X, RETA Y) {
@@ -43,9 +20,7 @@ int Inter(RETA X, RETA Y) {
 	ll B1 = X.B; ll B2 = Y.B;
 	ll C1 = X.C; ll C2 = Y.C;
 
-
 	pii res;
-
 	double det = A1*B2 - A2*B1;
 	if(det == 0){
 		//Lines are parallel
@@ -56,9 +31,7 @@ int Inter(RETA X, RETA Y) {
 		res = pii(x,y);
 		return 1;
 	}
-
 }
-
 
 vector< pii > v;
 map< RETA, int > conta;
@@ -124,7 +97,6 @@ RETA Perpendicular(RETA r, pii a) {
 }
 
 void ok(int a, int b) {
-
 	ll x1 = v[a].first;
 	ll y1 = v[a].second;
 	ll x2 = v[b].first;
@@ -155,7 +127,6 @@ int naReta(RETA r, pii p) {
 class Symmetry {
 	public:
 		int countLines(vector <string> points) {
-
 			v.clear();
 			string tot = "";
 
@@ -187,7 +158,6 @@ class Symmetry {
 
 			if(sz(v) == 2) { r2++; }
 			if(sz(v) >= 3) if(colinear()) { r2++; }
-
 			for(map<RETA, int>::iterator it = conta.begin(); it != conta.end(); it++) {
 				int tenho = (*it).second;
 				FOR(i, sz(v)) {
@@ -196,12 +166,6 @@ class Symmetry {
 				if(tenho == sz(v)) r2++;
 			}
 			printf("%d\n", r2);
-
 			return r2;
 		}
 };
-
-int main() {
-	return 0;
-}
-

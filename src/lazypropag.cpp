@@ -1,14 +1,11 @@
 #include<cstdio>
-
 #define N 100000
-
 struct Arv {
 	int esq,dir;
 	int ini,fim;
 	int trocas;
 	int qtd[3];
 };
-
 Arv tree[2*N];
 int cabeca, qnos, nos[N], TROCAS[N];
 
@@ -32,7 +29,6 @@ int monta(int ini, int fim) {
 }
 
 int AUX[3];
-
 void soma(int at, int ini, int fim) {
 	if(ini <= tree[at].ini && tree[at].fim <= fim) {
 		tree[at].trocas++;
@@ -75,8 +71,6 @@ void get(int at, int ini, int fim, int trocas) {
 	}
 }
 
-int vals[N];
-
 int query(int a, int b) {
 	qnos = 0;
 	get(0,a,b,0);
@@ -86,8 +80,6 @@ int query(int a, int b) {
 	}
 	return r;
 }
-
-
 
 int main() {
 	int n,q,op,a,b;

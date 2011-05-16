@@ -59,7 +59,6 @@ ATOL make_ATOL(int id, bool entra, double ang, point c) {
 	return novo;
 }
 
-
 double anguloAtan2(point centro, point novo) {
 	double y = novo.y - centro.y;
 	double x = novo.x - centro.x;
@@ -85,17 +84,15 @@ pair< point, point > calcula_pontos_entrada_e_saida_da_sweep( point a, point b, 
 }
 
 void calcula_eventos(int id, double raio){
-	eventos.clear();
-	point a = P[id];
-
-	for(int i = 0; i < n; i++) {
-		if( i == id ) continue;
-		if(dist( a, P[i] ) > 2*raio ) continue;
-		pair< point , point > intersecoes = calcula_pontos_entrada_e_saida_da_sweep( a, P[i], raio );
-		eventos.push_back( make_ATOL( i, false , anguloAtan2(a,intersecoes.first), intersecoes.first) );
-		eventos.push_back( make_ATOL( i, true , anguloAtan2(a,intersecoes.second), intersecoes.second) );
-	}
-
+ eventos.clear();
+ point a = P[id];
+ for(int i = 0; i < n; i++) {
+   if( i == id ) continue;
+   if(dist( a, P[i] ) > 2*raio ) continue;
+   pair< point , point > intersecoes = calcula_pontos_entrada_e_saida_da_sweep( a, P[i], raio);
+   eventos.push_back( make_ATOL( i, false , anguloAtan2(a,intersecoes.first), intersecoes.first));
+   eventos.push_back( make_ATOL( i, true , anguloAtan2(a,intersecoes.second), intersecoes.second));
+ }
 }
 
 int dentro[NMAX];
@@ -133,7 +130,6 @@ int sweepGiratoria(int id,  double r) {
 	return output;
 }
 
-
 int main(){
 	while(scanf("%d %d",&n, &m) == 2){
 		if(n == 0 && m == 0) break;
@@ -143,7 +139,6 @@ int main(){
 			P[i] = make_point(x,y);
 		}
 		double lower = 0.0, upper = 100000.0, meio;
-
 		for(int it = 0; it <= 60; ++it) {
 			if(upper - lower <= 1e-5) break;
 			meio = (lower+upper)/2;
@@ -158,18 +153,7 @@ int main(){
 				lower = meio;
 			}
 		}
-
 		printf("%.3lf\n", (lower + upper)/2);
 	}
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-

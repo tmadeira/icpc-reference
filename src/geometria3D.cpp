@@ -30,7 +30,9 @@ vetor operator + (const vetor &u, const vetor &v) { return vetor(u.x + v.x, u.y 
 vetor operator - (const vetor &u, const vetor &v) { return vetor(u.x - v.x, u.y - v.y, u.z - v.z); }
 vetor operator * (const double &a, const vetor &v) { return vetor(a * v.x, a * v.y, a * v.z); }
 double dot(const vetor u, const vetor v) { return u.x * v.x + u.y * v.y + u.z * v.z; }
-vetor cross(const vetor u, const vetor v) { return vetor(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); }
+vetor cross(const vetor u, const vetor v) { 
+	return vetor(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); 
+}
 double norma(const vetor v) { return sqrt(dot(v, v)); }
 
 void debug(vetor v) { printf("(%.2f, %.2f, %.2f)\n", v.x, v.y, v.z); }
@@ -182,7 +184,7 @@ double distancia(const ponto p, const triangulo T) {
 	if (dot(R1, R2) > -epsilon && dot(R2, R3) > -epsilon && dot(R1, R3) > -epsilon) {
 		return norma(vetor(PPP, p));
 	} else {
-		return min(linedist(T.a, T.b, p), min(linedist(T.b, T.c, p), linedist(T.c, T.a, p)));
+	   return min(linedist(T.a, T.b, p), min(linedist(T.b, T.c, p), linedist(T.c, T.a, p)));
 	}
 }
 /* Fim das funcoes do ITA no G da subregional */
