@@ -1,14 +1,10 @@
 #include<cstdio>
 #define N 100000
 struct Arv {
-	int esq,dir;
-	int ini,fim;
-	int trocas;
-	int qtd[3];
+	int esq,dir, ini,fim, trocas, qtd[3];
 };
 Arv tree[2*N];
 int cabeca, qnos, nos[N], TROCAS[N];
-
 int monta(int ini, int fim) {
 	int at = cabeca++;
 	tree[at].ini = ini;
@@ -84,8 +80,7 @@ int query(int a, int b) {
 int main() {
 	int n,q,op,a,b;
 	scanf("%d %d", &n, &q);
-	cabeca = 0;
-	monta(0,n-1);
+	cabeca = 0; monta(0,n-1);
 	for(int i = 0; i < q; i++) {
 		scanf("%d %d %d", &op, &a, &b);
 		if(op == 0) {
@@ -94,5 +89,4 @@ int main() {
 			printf("%d\n", query(a,b));
 		}
 	}
-	return 0;
 }

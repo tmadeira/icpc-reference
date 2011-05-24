@@ -2,23 +2,17 @@
  * ALGORITMO DE HOPCROFT-KARP
  * Encontra emparelhamento maximo num grafo bipartido em O(E sqrt(V))
  */
-
 #include <stdio.h>
 #include <string.h>
 #include <queue>
 #include <vector>
-
 using namespace std;
-
 #define MMAX 1024
 #define NMAX 1024
-
 int UMATE[MMAX], M[MMAX], D[MMAX];
 int VMATE[NMAX], RET[NMAX];
 int m, n, len;
-
 vector <int> E[MMAX];
-
 void bfs() {
 	queue <int> Q;
 	len = m;
@@ -46,7 +40,6 @@ void bfs() {
 		}
 	}
 }
-
 void augment(int v) {
 	do {
 		int u = RET[v];
@@ -56,7 +49,6 @@ void augment(int v) {
 		v = w;
 	} while (v != -1);
 }
-
 int dfs(int u) {
 	M[u] = 1;
 	for (int i = 0; i < E[u].size(); i++) {
@@ -77,7 +69,6 @@ int dfs(int u) {
 	}
 	return 0;
 }
-
 int match() {
 	memset(UMATE, -1, sizeof(UMATE));
 	memset(VMATE, -1, sizeof(VMATE));

@@ -1,17 +1,13 @@
 //OBSERVACAO: Sempre colocar as arestas de ida e volta.
-
 using namespace std;
-
 vector<int> grafo[MAX];
 int cap[MAX][MAX];
 int parnt[MAX];
-
 int flow(int s, int t) {
     int f = 0;
     while(true) {
         memset(parnt,-1,sizeof(parnt));
         parnt[s] = -2;
-
         queue<int> q;
         q.push(s);
         while(!q.empty() && parnt[t] == -1) {

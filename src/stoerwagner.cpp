@@ -1,9 +1,7 @@
 #define N 128
-
 int peso[N][N];
 int dist[N], ja_saiu[N], foi_contraido[N];
 int n,m;
-
 void contrai( pii ultimos ) {
 	int menor = min(ultimos.first, ultimos.second);
 	int maior = max(ultimos.first, ultimos.second);
@@ -15,7 +13,6 @@ void contrai( pii ultimos ) {
 	}
 	foi_contraido[maior] = 1;
 }
-
 int pega_maior() {
 	int id = -1;
 	FOR(i,n) {
@@ -24,7 +21,6 @@ int pega_maior() {
 	}
 	return id;
 }
-
 int corte_fase(int k) {
 	pii ultimos = pii(0, 0);
 	FOR(i,n) { dist[i] = 0; ja_saiu[i] = 0; }
@@ -39,7 +35,6 @@ int corte_fase(int k) {
 	contrai( ultimos );
 	return dist[ ultimos.first ];
 }
-
 int stoer_wagner() {
 	if(n == 1) return 0;
 	int output = (1<<31) - 1;
@@ -51,7 +46,6 @@ int stoer_wagner() {
 	}
 	return output;
 }
-
 int main() {
 	int T;
 	scanf("%d", &T);
@@ -67,7 +61,4 @@ int main() {
 		}
 		printf("%d\n", stoer_wagner());
 	}
-
-    return 0;
 }
-

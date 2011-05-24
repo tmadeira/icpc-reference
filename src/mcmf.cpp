@@ -2,7 +2,6 @@ using namespace std;
 #define MAX 256
 typedef long long ll;
 const ll inf = (1LL << 60);
-
 int grau[MAX];
 int pai[MAX];
 int adj[MAX][MAX];
@@ -11,21 +10,17 @@ int N,M;
 int queue[2][MAX];
 int lbl[2][MAX];
 int qf[2];
-
 struct aresta{
     ll v;
     ll cst;
     ll cap;
     ll flow;
 };
-
 aresta arestas[MAX*MAX*2];
-
 struct flow{
     ll cost;
     ll flow;
 };
-
 bool belman(int S,int T) {
     for(int i = 0; i < N; i++) {
         dist[i] = inf;

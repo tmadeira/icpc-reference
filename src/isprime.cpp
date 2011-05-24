@@ -1,7 +1,4 @@
-llu llrand() {
-    llu a = rand(); a<<= 32; a+= rand(); return a;
-}
-
+llu llrand() { llu a = rand(); a<<= 32; a+= rand(); return a;}
 int is_probably_prime(llu n) {
     if (n <= 1) return 0;
     if (n <= 3) return 1;

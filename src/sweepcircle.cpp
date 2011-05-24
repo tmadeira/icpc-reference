@@ -82,5 +82,4 @@ int main(){
         }
         printf("%.3lf\n", (lower + upper)/2);
     }
-    return 0;
 }

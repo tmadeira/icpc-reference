@@ -56,5 +56,4 @@ int main() {
         for(int i = 0; i < N; i++) scanf("%d %d", &P[i].x, &P[i].y);
         graham(P, N, CH, &CH_N);
     }
-    return 0;
 }

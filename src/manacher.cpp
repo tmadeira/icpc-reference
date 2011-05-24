@@ -1,6 +1,5 @@
 /* Encontrar palindromos - inicializa d1 e d2 com zeros, e eles guadram 
  * o numero de palindromos centrados na posicao i (d1[i] e d2[i])*/
-
 /* impar */
 vector<int> d1 (n);
 int l=0, r=-1;
@@ -11,7 +10,6 @@ for (int i=0; i<n; ++i) {
 	if (i+k > r)
 		l = i-k,  r = i+k;
 }
-
 /* par */
 vector<int> d2 (n);
 l=0, r=-1;

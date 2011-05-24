@@ -1,26 +1,17 @@
 struct Trie {
-    short folha; //Se w <= 1<<16
-    int goFail;
-    map<char,int> filho;
+    short folha; /*Se w <= 1<<16*/ int goFail; map<char,int> filho;
 };
-
 #define WMAX 1024
 #define TMAX 1024
 #define TEXTSIZE 1024*1024
-
 Trie trie[WMAX*TMAX];
-char texto[TEXTSIZE];
-char word[WMAX][TMAX];
-int tam[WMAX];
-int cabeca = WMAX*TMAX-1, w;
+char texto[TEXTSIZE], word[WMAX][TMAX];
+int tam[WMAX], cabeca = WMAX*TMAX-1, w, id[WMAX];
 vector<int> ocorrencias[WMAX];
-int id[WMAX];
-
 int insere(char c, int at) {
     if (trie[at].filho.count(c)) return trie[at].filho[c];
     else return trie[at].filho[c] = ++cabeca;
 }
-
 void montaTrie() {
     for (int i = 0; i <= cabeca; i++) {
         trie[i].folha = 0; trie[i].goFail = -1; trie[i].filho.clear();
@@ -33,17 +24,16 @@ void montaTrie() {
         else id[i] = trie[at].folha-1;
     }
 }
-
 void arrumaGoFails() {
-    queue<int> fila;
-    for (map<char,int>::iterator it = trie[0].filho.begin(); it != trie[0].filho.end(); it++) {
+    queue<int> fila; map<char,int>::iterator it;
+    for (it = trie[0].filho.begin(); it != trie[0].filho.end(); it++) {
         trie[it->second].goFail = 0;
         fila.push( it->second );
     }
     while (!fila.empty()) {
         int no = fila.front();
         fila.pop();
-        for (map<char,int>::iterator it = trie[no].filho.begin(); it != trie[no].filho.end(); it++) {
+        for (it = trie[no].filho.begin(); it != trie[no].filho.end(); it++) {
             int atual = it->second, failPai = trie[no].goFail, caminho = it->first;
             fila.push(atual);
             while (failPai >= 0 && !trie[failPai].filho.count(caminho))
@@ -59,8 +49,6 @@ void arrumaGoFails() {
         }		
     }
 }
-
-
 void fazConsulta(char * s) {
     int at = 0;
     for (int pos = 0; s[pos]; pos++) {
@@ -76,10 +64,8 @@ void fazConsulta(char * s) {
         }
     }
 }
-
 int main() {
-    scanf("%s", texto);
-    scanf("%d", &w);
+    scanf("%s", texto); scanf("%d", &w);
     for(int i = 0; i < w; i++) {
         scanf("%s", word[i]);
         id[i] = i; tam[i] = strlen(word[i]);
@@ -88,5 +74,4 @@ int main() {
     for(int i = 0; i < w; i++) ocorrencias[i].clear();
     fazConsulta(texto);
     for(int i = 0; i < w; i++) printf("%s\n", ocorrencias[ id[i] ].empty() ? "n" : "y" ); 
-    return 0;
 }

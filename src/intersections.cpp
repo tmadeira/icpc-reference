@@ -1,6 +1,5 @@
 void intersecaoCirculoReta() {
 	double r, a, b, c; // circulo de raio r, e reta ax+by+c=0
-
 	double x0 = -a*c/(a*a+b*b),  y0 = -b*c/(a*a+b*b);
 	if (c*c > r*r*(a*a+b*b)+EPS)
 		puts ("no points");

@@ -1,27 +1,20 @@
 /* Geometria 3D */
-
 #include <stdio.h>
 #include <math.h>
 #include <algorithm>
-
 using namespace std;
-
 const double epsilon = 1e-11;
-
 /* PONTOS E VETORES */
-
 struct ponto {
 	double x, y, z;
 	ponto(double X = 0, double Y = 0, double Z = 0): x(X), y(Y), z(Z) { }
 };
-
 struct vetor {
 	double x, y, z;
 	vetor(double X = 0, double Y = 0, double Z = 0): x(X), y(Y), z(Z) { }
 	vetor(ponto p) { x = p.x; y = p.y; z = p.z; }
 	vetor(ponto p, ponto q) { x = q.x - p.x; y = q.y - p.y; z = q.z - p.z; }
 };
-
 ponto operator + (const ponto &p, const vetor &v) { return ponto(p.x + v.x, p.y + v.y, p.z + v.z); }
 ponto operator + (const ponto &p, const ponto &q) { return ponto(p.x + q.x, p.y + q.y, p.z + q.z); }
 ponto operator - (const ponto &p, const vetor &v) { return ponto(p.x - v.x, p.y - v.y, p.z - v.z); }
@@ -34,50 +27,39 @@ vetor cross(const vetor u, const vetor v) {
 	return vetor(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); 
 }
 double norma(const vetor v) { return sqrt(dot(v, v)); }
-
 void debug(vetor v) { printf("(%.2f, %.2f, %.2f)\n", v.x, v.y, v.z); }
-
 /* RETAS, SEMIRETAS, SEGMENTOS E TRIANGULOS */
-
 struct reta {
 	ponto a, b;
 	reta(ponto A, ponto B): a(A), b(B) { }
 	reta(ponto P, vetor V): a(P) { b = P + V; }
 };
-
 struct semireta {
 	ponto a, b;
 	semireta(ponto A, ponto B): a(A), b(B) { }
 	semireta(ponto P, vetor V): a(P) { b = P + V; }
 };
-
 struct segmento {
 	ponto a, b;
 	segmento(ponto A, ponto B): a(A), b(B) { }
 };
-
 struct triangulo {
 	ponto a, b, c;
 	triangulo(ponto A, ponto B, ponto C): a(A), b(B), c(C) { }
 };
-
 /* DISTANCIA ENTRE OBJETOS GEOMETRICOS */
-
 double distancia(const ponto a, const ponto b) {
 	return norma(vetor(a, b));
 }
-
 double distancia(const ponto p, const reta r) {
 	vetor v(r.a, r.b), w(r.a, p);
 	return norma(cross(v, w)) / norma(v);
 }
-
 double distancia(const ponto p, const semireta s) {
 	vetor v(s.a, s.b), w(s.a, p);
 	if (dot(v, w) <= 0) return distancia(p, s.a);
 	return distancia(p, reta(s.a, s.b));
 }
-
 double distancia(const ponto p, const segmento s) {
 	vetor v(s.a, s.b), w(s.a, p);
 	double c1 = dot(v, w), c2 = dot(v, v);
@@ -85,7 +67,6 @@ double distancia(const ponto p, const segmento s) {
 	if (c2 <= c1) return distancia(p, s.b);
 	return distancia(p, s.a + (c1/c2)*v);
 }
-
 double distancia(const reta r, const reta s) {
 	vetor u(r.a, r.b), v(s.a, s.b), w(r.a, s.a);
 	double a = dot(u, u), b = dot(u, v), c = dot(v, v), d = dot(u, w), e = dot(v, w);
@@ -100,14 +81,12 @@ double distancia(const reta r, const reta s) {
 	vetor dP = w + (sc * u) - (tc * v);
 	return norma(dP);
 }
-
 double distancia(const segmento r, const segmento s) {
 	vetor u(r.a, r.b), v(s.a, s.b), w(s.a, r.a);
 	double a = dot(u, u), b = dot(u, v), c = dot(v, v), d = dot(u, w), e = dot(v, w);
 	double D = a*c - b*b;
 	double sc, sN, sD = D;
 	double tc, tN, tD = D;
-
 	if (D < epsilon) {
 		sN = 0;
 		sD = 1;
@@ -126,7 +105,6 @@ double distancia(const segmento r, const segmento s) {
 			tD = c;
 		}
 	}
-	
 	if (tN < 0) {
 		tN = 0;
 		if (-d < 0) {
@@ -148,23 +126,18 @@ double distancia(const segmento r, const segmento s) {
 			sD = a;
 		}
 	}
-
 	sc = fabs(sN) < epsilon ? 0 : sN / sD;
 	tc = fabs(tN) < epsilon ? 0 : tN / tD;
-
 	vetor dP = w + (sc * u) - (tc * v);
 	return norma(dP);
 }
-
 /* Inicio das funcoes do ITA no G da subregional */
 vetor projecao(vetor u, vetor v) {
 	return (dot(v, u) / dot(u, u)) * u;
 }
-
 bool between(ponto a, ponto b, ponto p) {
 	return dot(vetor(p - a), vetor(p - b)) < epsilon;
 }
-
 double linedist(ponto a, ponto b, ponto p) {
 	ponto proj = a + projecao(vetor(a, b), vetor(a, p));
 	if (between(a, b, proj)) {
@@ -173,7 +146,6 @@ double linedist(ponto a, ponto b, ponto p) {
 		return min(norma(vetor(a, p)), norma(vetor(b, p)));
 	}
 }
-
 double distancia(const ponto p, const triangulo T) {
 	vetor X(T.a, T.b), Y(T.a, T.c), P(T.a, p);
 	vetor PP = P - projecao(cross(X, Y), P);
@@ -188,10 +160,8 @@ double distancia(const ponto p, const triangulo T) {
 	}
 }
 /* Fim das funcoes do ITA no G da subregional */
-
 #define NMAX 4
 ponto P[NMAX], Q[NMAX];
-
 int main() {
 	int tests;
 	scanf("%d", &tests);
@@ -230,6 +200,4 @@ int main() {
 		}
 		printf("%.2f\n", out);
 	}
-	return 0;
 }
-

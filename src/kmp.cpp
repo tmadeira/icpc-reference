@@ -1,5 +1,4 @@
-int pi[MAX];
-char p[MAX], p2[MAX], T;
+int pi[MAX]; char p[MAX], p2[MAX], T;
 void compute_prefix_function(int m){
     int k = pi[0] = -1;
     for (int i = 1; i < m; i++) {

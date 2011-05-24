@@ -7,30 +7,25 @@
 #include<map>
 #include<set>
 using namespace std;
-
 #define NMAX 1024
 vector< pair<int,int> > adj[NMAX], grafo[NMAX];
 int n,m;
 int ja[NMAX];
 int peso[NMAX][NMAX];
 int fora[NMAX];
-
 void dfs(int v) {
 	if(ja[v]) return;
 	ja[v] = 1;
 	for(int i = 0; i < (int) grafo[v].size(); i++) dfs(grafo[v][i].first);
 }
-
 int consegue() {
 	memset(ja, 0, sizeof(ja));
 	dfs(0);
 	for(int i = 0; i < n; i++) if(!ja[i]) return 0;
 	return 1;
 }
-
 pair<int,int> arco[NMAX];
 int pai[NMAX];
-
 int reconstroi_ciclo(int v, int fim, vector<int> & c) {
 	c.clear();
 	int x = v;
@@ -41,7 +36,6 @@ int reconstroi_ciclo(int v, int fim, vector<int> & c) {
 	c.push_back(fim);
 	return 1;
 }
-
 int ciclo(int v, vector<int> & c) {
 	ja[v] = 1;
 	for(int i = 0; i < (int) adj[v].size(); i++) {
@@ -57,7 +51,6 @@ int ciclo(int v, vector<int> & c) {
 	ja[v] = 2;
 	return 0;
 }
-
 int tem_ciclo(vector<int> & c) {
 	memset(ja, 0, sizeof(ja));
 	for(int i = 0; i < n; i++) {
@@ -67,9 +60,7 @@ int tem_ciclo(vector<int> & c) {
 	}
 	return 0;
 }
-
 int no_ciclo[NMAX];
-
 void contrai(vector<int> c) {
 	reverse(c.begin(), c.end());
 	memset(no_ciclo, 0, sizeof(no_ciclo));
@@ -82,7 +73,6 @@ void contrai(vector<int> c) {
 			id_contraido = c[i];
 		}
 	}
-
 	/* arruma as arestas que saem do vertice contraido */
 	for(int i = 0; i < (int) c.size(); i++) {
 		int v = c[i];
@@ -104,7 +94,6 @@ void contrai(vector<int> c) {
 			}
 		}
 	}
-
 	pair<int,int> novo_arco = make_pair( (1<<29) , -1);
 	/* arruma as arestas que entram no vertice contraido */
 	for(int i = 0; i < n; i++) {
@@ -120,7 +109,6 @@ void contrai(vector<int> c) {
 		}
 	}
 	arco[id_contraido] = novo_arco;
-
 	for(int i = 0; i < (int)c.size(); i++) {
 		if(c[i] != id_contraido) {
 			fora[c[i]] = 1;
@@ -195,5 +183,4 @@ int main() {
 			printf("%d\n", calcula());
 		}
 	}
-	return 0;
 }

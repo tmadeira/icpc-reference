@@ -1,6 +1,5 @@
 int T;
 int X,Y,M;
- 
 int cmp(double a, double b) {
     if(fabs(a-b)<=1e-8)
         return 0;
@@ -8,7 +7,6 @@ int cmp(double a, double b) {
         return -1;
     return 1;
 }
- 
 struct point {
     double x,y;
     point() {}
@@ -23,11 +21,9 @@ struct point {
         return point(x/a,y/a);
     }
 };
- 
 double sqrdist(const point& a, const point &b) {
     return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 }
-  
 struct line {
     double a,b,c;
     line() {}
@@ -51,23 +47,18 @@ struct line {
 point intersection(const line& l, const line& l2) {
     return point((l.b*l2.c-l.c*l2.b)/(l.a*l2.b-l2.a*l.b),(-l.a*l2.c+l.c*l2.a)/(l.a*l2.b-l2.a*l.b));;
 }
- 
 point pontos[2000];
 point polygon[2000];
 int npolygon;
 point polaux[2000];
- 
 int npolaux;
 int main(void) {
     scanf("%d",&T);
     while(T--) {
         scanf("%d %d %d",&X,&Y,&M);
-        for(int i=0;i<M;i++)
-            scanf("%lf %lf",&pontos[i].x,&pontos[i].y);
- 
+        for(int i=0;i<M;i++) scanf("%lf %lf",&pontos[i].x,&pontos[i].y);
         double ansd=-1;
         point ans;
- 
         for(int i=0;i<M;i++) {
             npolygon=4;
             polygon[0]=point(0,0);
@@ -115,7 +106,5 @@ int main(void) {
                 }
         }
         printf("The safest point is (%.1lf, %.1lf).\n",ans.x,ans.y);
- 
     }
-    return 0;
 }
