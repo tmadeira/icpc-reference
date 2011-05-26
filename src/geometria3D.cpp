@@ -15,13 +15,20 @@ struct vetor {
     vetor(ponto p) { x = p.x; y = p.y; z = p.z; }
     vetor(ponto p, ponto q) { x = q.x - p.x; y = q.y - p.y; z = q.z - p.z; }
 };
-ponto operator + (const ponto &p, const vetor &v) { return ponto(p.x + v.x, p.y + v.y, p.z + v.z); }
-ponto operator + (const ponto &p, const ponto &q) { return ponto(p.x + q.x, p.y + q.y, p.z + q.z); }
-ponto operator - (const ponto &p, const vetor &v) { return ponto(p.x - v.x, p.y - v.y, p.z - v.z); }
-ponto operator - (const ponto &p, const ponto &q) { return ponto(p.x - q.x, p.y - q.y, p.z - q.z); }
-vetor operator + (const vetor &u, const vetor &v) { return vetor(u.x + v.x, u.y + v.y, u.z + v.z); }
-vetor operator - (const vetor &u, const vetor &v) { return vetor(u.x - v.x, u.y - v.y, u.z - v.z); }
-vetor operator * (const double &a, const vetor &v) { return vetor(a * v.x, a * v.y, a * v.z); }
+ponto operator + (const ponto &p, const vetor &v) {
+    return ponto(p.x + v.x, p.y + v.y, p.z + v.z); }
+ponto operator + (const ponto &p, const ponto &q) {
+    return ponto(p.x + q.x, p.y + q.y, p.z + q.z); }
+ponto operator - (const ponto &p, const vetor &v) {
+    return ponto(p.x - v.x, p.y - v.y, p.z - v.z); }
+ponto operator - (const ponto &p, const ponto &q) {
+    return ponto(p.x - q.x, p.y - q.y, p.z - q.z); }
+vetor operator + (const vetor &u, const vetor &v) {
+    return vetor(u.x + v.x, u.y + v.y, u.z + v.z); }
+vetor operator - (const vetor &u, const vetor &v) {
+    return vetor(u.x - v.x, u.y - v.y, u.z - v.z); }
+vetor operator * (const double &a, const vetor &v) {
+    return vetor(a * v.x, a * v.y, a * v.z); }
 double dot(const vetor u, const vetor v) { return u.x * v.x + u.y * v.y + u.z * v.z; }
 vetor cross(const vetor u, const vetor v) { 
     return vetor(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x); 
