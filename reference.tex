@@ -4,7 +4,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[sc]{mathpazo}
-\linespread{1.15}
+\linespread{1.2}
 
 %\usepackage{eulervm}
 
@@ -72,38 +72,13 @@
 \maketitle
 \thispagestyle{fancy}
 
-
-
 \tableofcontents
 
-\SECTION{TODO} {
-.
-
-LCA (ok?)
-
-2SAT com reconstrucao (ok?)
-
-Pontes e pontos de articulacao (precisa?)
-
-Fatoracao LU
-
-+Geometria
-
-Voronoi (precisa?)
-
-}
-
-\section{Mathmatics}
-% Mathematics
+\section{Numbers and Number Theory}
 
 \SECTION{Arbitrary Precision Integers}{
 	\Csourcefile{bigint}
 }
-
-% TODO fatoração LU
-
-\section{Number Theory}
-% Number Theory
 
 \SECTION{Extended Euclid's Algorithm (Bézout's Theorem)}{
 	\Csourcefile{bezout}
@@ -122,8 +97,23 @@ Voronoi (precisa?)
 	\Csourcefile{rho}
 }
 
-\section{Combinatory}
-% Combinatory
+\SECTION{Brent's Algorithm (Cycle detection)}{
+    Let $x_0\in S$ be an element of the finite set $S$ and consider a function $f:S\to S$. Define
+    \[ f_k(x) = \begin{cases}x,& k = 0 \\ f\bigl(f_{k-1}(x)\bigr),& k > 0\end{cases}. \]
+
+    Clearly, there exists distinct numbers $i,j\in\NN$, $i\neq j$, such that $f_i(x_0) = f_j(x_0)$.
+
+    Let $\mu\in\NN$ be the least value such that there exists $j\in\NN\setminus\{\mu\}$ such that
+    $f_\mu(x_0) = f_j(x_0)$ and let $\lambda\in\NN$ be the least value such that
+    $f_\mu(x_0) = f_{\mu+\lambda}(x_0)$.
+
+    Given $x_0$ and $f$, this code computes $\mu$ and $\lambda$ applying the operator $f$
+    $\bigO(\mu+\lambda)$ times and storing at most a constant amount of elements from $S$.
+
+    \Csourcefile{brent}
+}
+
+\section{Counting}
 
 \SECTION{Catalan Numbers} {
 	$C_n$ is:
@@ -222,47 +212,43 @@ Voronoi (precisa?)
 	$p$, respectively.
 }
 
-\SECTION{Derangement - Desarranjo} {
+\SECTION{Derangement (Desarranjo)} {
+    A derangement is a permutation of the elements of a set such that none of the elements appear in their original position.
 
-A derangement is a permutation of the elements of a set such that none of the elements appear in their original position.
+    Suppose that there are $n$ persons numbered $1, 2, \hdots, n$. Let there be $n$ hats also numbered $1, 2, \hdots, n$. 
+    We have to find the number of ways in which no one gets the hat having same number as his/her number. 
+    Let us assume that first person takes the hat $i$. There are $n - 1$ ways for the first person to choose the number $i$. Now there are 2 options:
 
-Suppose that there are $n$ persons numbered $1, 2, \hdots, n$. Let there be $n$ hats also numbered $1, 2, \hdots, n$. 
-We have to find the number of ways in which no one gets the hat having same number as his/her number. 
-Let us assume that first person takes the hat $i$. There are $n - 1$ ways for the first person to choose the number $i$. Now there are 2 options:
-Person $i$ takes the hat of 1. Now the problem reduces to $n - 2$ persons and $n - 2$ hats.
-Person $i$ does not take the hat 1. This case is equivalent to solving the problem with $n - 1$ persons $n - 1$ 
-hats (each of the remaining $n - 1$ people has precisely 1 forbidden choice from among the remaining $n - 1$ hats).
-From this, the following relation is derived:
+    \begin{itemize}
+        \item Person $i$ takes the hat of 1. Now the problem reduces to $n - 2$ persons and $n - 2$ hats.
+        \item Person $i$ does not take the hat 1. This case is equivalent to solving the problem with $n - 1$ persons $n - 1$ hats (each of the remaining $n - 1$ people has precisely 1 forbidden choice from among the remaining $n - 1$ hats).
+    \end{itemize}
 
-$$d_n = (n-1) * (d_{n-1} + d_{n-2})$$
-$$d_1 = 0$$
-$$d_2 = 1$$
+    From this, the following relation is derived:
 
-Starting with $n = 0$, the numbers of derangements of n are:
-1, 0, 1, 2, 9, 44, 265, 1854, 14833, 133496, 1334961, 14684570, 176214841, 2290792932.
+    $$d_n = (n-1) * (d_{n-1} + d_{n-2})$$
+    $$d_1 = 0$$
+    $$d_2 = 1$$
+
+    Starting with $n = 0$, the numbers of derangements of $n$ are:
+    1, 0, 1, 2, 9, 44, 265, 1854, 14833, 133496, 1334961, 14684570, 176214841, 2290792932.
 }
 
 \section{Strings}
-% Strings
 
 \SECTION{Knuth--Morris--Pratt Algorithm}{
 	\Csourcefile{kmp}
-}
-
-\SECTION{Rabin--Karp Algorithm}{
-	\Csourcefile{rabinkarp}
 }
 
 \SECTION{Aho--Corasick Algorithm}{
 	\Csourcefile{ahocorasick}
 }
 
-\SECTION{Suffix Array and Longest Common Prefix}{
+\SECTION{Suffix Array and Longest Common Prefix (DC3)}{
 	\Csourcefile{suffixarray}
 }
 
 \section{Geometry}
-% Geometry
 
 \SECTION{Graham's Scan Algorithm}{
 	\Csourcefile{graham}
@@ -272,7 +258,7 @@ Starting with $n = 0$, the numbers of derangements of n are:
 	\Csourcefile{mindisc}
 }
 
-\SECTION{SweepCircle} {
+\SECTION{Sweep Circle} {
 	\Csourcefile{sweepcircle}
 }
 
@@ -280,22 +266,25 @@ Starting with $n = 0$, the numbers of derangements of n are:
 	\Csourcefile{intersections}
 }
 
-\SECTION{Retas} {
+\SECTION{Lines} {
 	\Csourcefile{retas}
 }
 
-\SECTION{Geometria 3D} {
+\SECTION{3D Geometry} {
 	\Csourcefile{geometria3D}
 }
 
-\SECTION{Centroide} {
+\SECTION{Centroid} {
 	\Csourcefile{centroide}
 }
 
-\section{Graphs}
-% Graphs
+\SECTION{Voronoi} {
+	\Csourcefile{voronoi}
+}
 
-\SECTION{MaxFlow MinCost} {
+\section{Graphs}
+
+\SECTION{MaxFlow--MinCost} {
 	\Csourcefile{mcmf2}
 }
 
@@ -303,45 +292,45 @@ Starting with $n = 0$, the numbers of derangements of n are:
 	\Csourcefile{maxflow}
 }
 
-\SECTION{Hopcroft} {
+\SECTION{Hopcroft--Karp} {
 	\Csourcefile{hopcroft}
 }
 
-\SECTION{Maximum Match - Edmonds} {
+\SECTION{Maximum Match (Edmonds--Karp)} {
 	\Csourcefile{EdmondsMaximumMatch}
 }
 
-\SECTION{StoerWagner} {
+\SECTION{Stoer--Wagner} {
 	\Csourcefile{stoerwagner}
 }
 
-\SECTION{2 SAT} {
+\SECTION{2-satisfability} {
 	\Csourcefile{2sat}
 }
 
 \section{Data Structures}
 
-\SECTION{Kdtree} {
+\SECTION{kd-tree} {
 	\Csourcefile{kdtree}
 }
 
-\SECTION{Bit} {
+\SECTION{Binary Indexed Tree (BIT)} {
 	\Csourcefile{bit}
 }
 
-\SECTION{LIS} {
+\SECTION{Longest Increasing Subsequence (LIS)} {
 	\Csourcefile{lis}
 }
 
-\SECTION{Manacher} {
+\SECTION{Manacher's Algorithm (Palindrome Finding)} {
 	\Csourcefile{manacher}
 }
 
-\SECTION{Segment Tree + Lazy Propagation} {
+\SECTION{Segment Tree (with Lazy Propagation)} {
 	\Csourcefile{lazypropag}
 }
 
-\SECTION{LCA} {
+\SECTION{Longest Common Ancestor (LCA)} {
 	\Csourcefile{lca}
 }
 

@@ -66,34 +66,41 @@ int main(void) {
             polygon[2]=point(X,Y);
             polygon[3]=point(X,0);
             for(int j=0;j<M;j++) if(pontos[i].x!=pontos[j].x or pontos[i].y!=pontos[j].y) {
-                line biseccao = line(pontos[i],pontos[j]).ortogonal().passa_por((pontos[i]+pontos[j])/2.0);
+                line biseccao = line(pontos[i],pontos[j]).ortogonal()
+                    .passa_por((pontos[i]+pontos[j])/2.0);
                 int inter[8];
                 int ninter=0;
                 for(int k=0;k<npolygon;k++) {
                     int l=(k+1)%npolygon;
                     double l1=biseccao.a*polygon[k].x + biseccao.b*polygon[k].y + biseccao.c;
                     double l2=biseccao.a*polygon[l].x + biseccao.b*polygon[l].y + biseccao.c;
-                    //considera que a ponta do comeco intersecta e a ponta do final nao intersecta
-                    if( (cmp(l1,0.0)<=0 and cmp(l2,0.0)>0) or (cmp(l1,0.0)>=0 and cmp(l2,0.0)<0) ) {
+                    /* considera que a ponta do comeco intersecta e
+                     * a ponta do final nao intersecta */
+                    if( (cmp(l1,0.0)<=0 and cmp(l2,0.0)>0) or
+                            (cmp(l1,0.0)>=0 and cmp(l2,0.0)<0) ) {
                         inter[ninter++]=k;
                     }
                 }
                 assert(ninter<=2);
                 if(ninter==2) {
                     double lp=biseccao.a*pontos[i].x + biseccao.b*pontos[i].y + biseccao.c;
-                    double lpol=biseccao.a*polygon[(inter[0]+1)%npolygon].x + biseccao.b*polygon[(inter[0]+1)%npolygon].y + biseccao.c;
+                    double lpol=biseccao.a*polygon[(inter[0]+1)%npolygon].x
+                        + biseccao.b*polygon[(inter[0]+1)%npolygon].y + biseccao.c;
                     //verifica se a ordem do loop precisa ser trocada
                     if( (cmp(lp,0)<0 and cmp(lpol,0)>0) or (cmp(lp,0)>0 and cmp(lpol,0)<0) )
                         swap(inter[0],inter[1]);
                     npolaux=0;
-                    polaux[npolaux++]=intersection(biseccao,line(polygon[inter[0]],polygon[(inter[0]+1)%npolygon]));
+                    polaux[npolaux++]=intersection(biseccao,
+                            line(polygon[inter[0]],polygon[(inter[0]+1)%npolygon]));
                     for(int k=(inter[0]+1)%npolygon;k!=inter[1];k=(k+1)%npolygon) {
                         polaux[npolaux++]=polygon[k];
                     }
                     polaux[npolaux++]=polygon[inter[1]];
-                    polaux[npolaux++]=intersection(biseccao,line(polygon[inter[1]],polygon[(inter[1]+1)%npolygon]));
+                    polaux[npolaux++]=intersection(biseccao,
+                            line(polygon[inter[1]],polygon[(inter[1]+1)%npolygon]));
                     //se os 2 ultimos pontos coincidirem
-                    if(cmp(polaux[npolaux-1].x,polaux[npolaux-2].x)==0 and cmp(polaux[npolaux-1].y,polaux[npolaux-2].y)==0)
+                    if(cmp(polaux[npolaux-1].x,polaux[npolaux-2].x)==0
+                            and cmp(polaux[npolaux-1].y,polaux[npolaux-2].y)==0)
                         npolaux--;
                     memcpy(polygon,polaux,sizeof(polygon[0])*npolaux);
                     npolygon=npolaux;

@@ -10,14 +10,16 @@ point make_point(double x,double y) { return (point) { x, y }; }
 circle make_circle(point p) { return (circle) { p, 0.0 }; }
 circle make_circle (point p,point q) { return (circle) { middle(p, q), dist(p, q)/2.0 }; }
 bool perpendicular(point a,point b,point c){
-    double yDelta_a = b.y - a.y, xDelta_a = b.x - a.x, yDelta_b = c.y - b.y, xDelta_b = c.x - b.x;
+    double yDelta_a = b.y - a.y, xDelta_a = b.x - a.x,
+           yDelta_b = c.y - b.y, xDelta_b = c.x - b.x;
     if (fabs(xDelta_a) <= eps && fabs(yDelta_b) <= eps) return false;
     if (fabs(yDelta_a) <= eps) return true; if (fabs(yDelta_b) <= eps) return true;
     if (fabs(xDelta_a) <= eps) return true; if (fabs(xDelta_b) <= eps) return true;
     return false;
 }
 circle calc_circle(point a,point b,point c) {
-    double yDelta_a = b.y - a.y, xDelta_a = b.x - a.x, yDelta_b = c.y - b.y, xDelta_b = c.x - b.x;
+    double yDelta_a = b.y - a.y, xDelta_a = b.x - a.x,
+           yDelta_b = c.y - b.y, xDelta_b = c.x - b.x;
     circle resp;
     if (fabs(xDelta_a) <= eps && fabs(yDelta_b) <= eps) {
         resp.c.x = 0.5*(b.x + c.x);
