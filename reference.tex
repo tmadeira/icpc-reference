@@ -47,10 +47,10 @@
 \newcommand{\norm}[1]{\abs{\abs{#1}}}
 \newcommand{\degree}{\ensuremath{^\circ}}
 \newcommand{\defun}[5] {
-  \begin{array}{rrcl}
-    #1: & #2 & \longrightarrow & #3 \\
-        & #4 & \longmapsto & #5
-  \end{array}
+    \begin{array}{rrcl}
+#1: & #2 & \longrightarrow & #3 \\
+    & #4 & \longmapsto & #5
+    \end{array}
 }
 \renewcommand{\le}{\leqslant}
 \renewcommand{\ge}{\geqslant}
@@ -77,265 +77,265 @@
 \section{Numbers and Number Theory}
 
 \SECTION{Arbitrary Precision Integers}{
-	\Csourcefile{bigint}
+    \Csourcefile{bigint}
 }
 
 \SECTION{Extended Euclid's Algorithm (Bézout's Theorem)}{
-	\Csourcefile{bezout}
+    \Csourcefile{bezout}
 }
 
 \SECTION{62-bit Modular Multiplication / Exponentiation}{
-	\Csourcefile{mulmod}
-	\Csourcefile{expmod}
+    \Csourcefile{mulmod}
+    \Csourcefile{expmod}
 }
 
 \SECTION{Miller--Rabin (Primality test)}{
-	\Csourcefile{isprime}
+    \Csourcefile{isprime}
 }
 
 \SECTION{Pollard's Rho (Factorization)}{
-	\Csourcefile{rho}
+    \Csourcefile{rho}
 }
 
 \SECTION{Brent's Algorithm (Cycle detection)}{
     Let $x_0\in S$ be an element of the finite set $S$ and consider a function $f:S\to S$. Define
-    \[ f_k(x) = \begin{cases}x,& k = 0 \\ f\bigl(f_{k-1}(x)\bigr),& k > 0\end{cases}. \]
+        \[ f_k(x) = \begin{cases}x,& k = 0 \\ f\bigl(f_{k-1}(x)\bigr),& k > 0\end{cases}. \]
 
-    Clearly, there exists distinct numbers $i,j\in\NN$, $i\neq j$, such that $f_i(x_0) = f_j(x_0)$.
+        Clearly, there exists distinct numbers $i,j\in\NN$, $i\neq j$, such that $f_i(x_0) = f_j(x_0)$.
 
-    Let $\mu\in\NN$ be the least value such that there exists $j\in\NN\setminus\{\mu\}$ such that
-    $f_\mu(x_0) = f_j(x_0)$ and let $\lambda\in\NN$ be the least value such that
-    $f_\mu(x_0) = f_{\mu+\lambda}(x_0)$.
+        Let $\mu\in\NN$ be the least value such that there exists $j\in\NN\setminus\{\mu\}$ such that
+        $f_\mu(x_0) = f_j(x_0)$ and let $\lambda\in\NN$ be the least value such that
+        $f_\mu(x_0) = f_{\mu+\lambda}(x_0)$.
 
-    Given $x_0$ and $f$, this code computes $\mu$ and $\lambda$ applying the operator $f$
-    $\bigO(\mu+\lambda)$ times and storing at most a constant amount of elements from $S$.
+        Given $x_0$ and $f$, this code computes $\mu$ and $\lambda$ applying the operator $f$
+        $\bigO(\mu+\lambda)$ times and storing at most a constant amount of elements from $S$.
 
-    \Csourcefile{brent}
+        \Csourcefile{brent}
 }
 
 \section{Counting}
 
 \SECTION{Catalan Numbers} {
-	$C_n$ is:
-	\begin{itemize}
-		\item The number of balanced expressions built from $n$ pairs of parentheses.
-		\item The number of paths in an $n\times n$ grid that stays on or below the diagonal.
-		\item The number of words of size $2n$ over the alphabet $\Sigma = \{a,b\}$ having an equal number of
-			  $a$ symbols and $b$ symbols containing no prefix with more $a$ symbols than $b$ symbols.
-	\end{itemize}
+    $C_n$ is:
+        \begin{itemize}
+    \item The number of balanced expressions built from $n$ pairs of parentheses.
+        \item The number of paths in an $n\times n$ grid that stays on or below the diagonal.
+        \item The number of words of size $2n$ over the alphabet $\Sigma = \{a,b\}$ having an equal number of
+        $a$ symbols and $b$ symbols containing no prefix with more $a$ symbols than $b$ symbols.
+        \end{itemize}
 
-	It holds that:
-	\[ C_0 = 1, C_{n+1} = \sum_{k=0}^n C_k C_{n-k} \]
-	\[ C_n = \binom{2n}n - \binom{2n}{n-1} = \frac 1{n+1}\binom{2n}n = \frac{(2n)!}{n!(n+1)!} \]
+    It holds that:
+        \[ C_0 = 1, C_{n+1} = \sum_{k=0}^n C_k C_{n-k} \]
+        \[ C_n = \binom{2n}n - \binom{2n}{n-1} = \frac 1{n+1}\binom{2n}n = \frac{(2n)!}{n!(n+1)!} \]
 }
 
 \SECTION{Stirling Numbers of the First Kind} {
-	$\ds \stirfst nk$ is:
-	\begin{itemize}
-		\item The number of ways to split $n$ elements into $k$ ordered partitions up to a
-			  permutation of the partitions among themselves and rotations within the partitions.
-		\item The number of digraphs with $n$ vertices and $k$ cycles such that each vertex
-			  has in and out degree of 1.
-	\end{itemize}
+    $\ds \stirfst nk$ is:
+        \begin{itemize}
+    \item The number of ways to split $n$ elements into $k$ ordered partitions up to a
+        permutation of the partitions among themselves and rotations within the partitions.
+        \item The number of digraphs with $n$ vertices and $k$ cycles such that each vertex
+        has in and out degree of 1.
+        \end{itemize}
 
-	It holds that:
-	\[ \stirfst n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
-	   \stirfst 0k = \begin{cases}1,& k=0 \\ 0,& k\neq 0\end{cases} \]
-	\[ \stirfst nk = (n-1)\stirfst{n-1}k + \stirfst{n-1}{k-1} \]
-	\[ \stirfst n1 = (n-1)! \]
-	\[ \stirfst n{n-1} = \binom n2 \]
-	\[ \stirfst n{n-2} = \frac 14 (3n-1) \binom n3 \]
-	\[ \stirfst n{n-3} = \binom n2 \binom n4 \]
-	\[ \stirfst n2 = (n-1)! H_{n-1} \]
-	\[ \stirfst n3 = \frac 12 (n-1)! \left( H_{n-1}^2 - H_{n-1}^{(2)} \right) \]
-	\[ H_n = \sum_{j=1}^n \frac 1j,\quad H_n^{(k)} = \sum_{j=1}^n \frac 1{j^k} \]
-	\[ \sum_{k=0}^n \stirfst nk = n! \]
-	\[ \sum_{j=k}^n \stirfst nj \binom jk = \stirfst{n+1}{k+1} \]
+    It holds that:
+        \[ \stirfst n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
+        \stirfst 0k = \begin{cases}1,& k=0 \\ 0,& k\neq 0\end{cases} \]
+        \[ \stirfst nk = (n-1)\stirfst{n-1}k + \stirfst{n-1}{k-1} \]
+        \[ \stirfst n1 = (n-1)! \]
+        \[ \stirfst n{n-1} = \binom n2 \]
+        \[ \stirfst n{n-2} = \frac 14 (3n-1) \binom n3 \]
+        \[ \stirfst n{n-3} = \binom n2 \binom n4 \]
+        \[ \stirfst n2 = (n-1)! H_{n-1} \]
+        \[ \stirfst n3 = \frac 12 (n-1)! \left( H_{n-1}^2 - H_{n-1}^{(2)} \right) \]
+        \[ H_n = \sum_{j=1}^n \frac 1j,\quad H_n^{(k)} = \sum_{j=1}^n \frac 1{j^k} \]
+        \[ \sum_{k=0}^n \stirfst nk = n! \]
+        \[ \sum_{j=k}^n \stirfst nj \binom jk = \stirfst{n+1}{k+1} \]
 }
 
 \SECTION{Stirling Numbers of the Second Kind} {
-	$\ds \stirsnd nk$ is the number of ways to partition an $n$-set into exactly $k$ non-empty disjoint subsets
-	up to a permutation of the sets among themselves. It holds that:
+    $\ds \stirsnd nk$ is the number of ways to partition an $n$-set into exactly $k$ non-empty disjoint subsets
+        up to a permutation of the sets among themselves. It holds that:
 
-	\[ \stirsnd n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
-	   \stirsnd n1 = \stirsnd nn = 1 \]
-	\[ \stirsnd nk = \stirsnd{n-1}{k-1} + k\stirsnd{n-1}k \]
-	\[ \stirsnd nk \bmod 2 = \begin{cases}
-					0,& (n-k)\&\floor{\frac{k-1}2}\neq 0 \\
-					1,& \text{otherwise}
-				 \end{cases}, \]
-	where $\&$ is the C bitwise ``and'' operator.
+        \[ \stirsnd n0 = \begin{cases}1,& n=0 \\ 0,& n\neq 0\end{cases},\quad
+        \stirsnd n1 = \stirsnd nn = 1 \]
+        \[ \stirsnd nk = \stirsnd{n-1}{k-1} + k\stirsnd{n-1}k \]
+        \[ \stirsnd nk \bmod 2 = \begin{cases}
+    0,& (n-k)\&\floor{\frac{k-1}2}\neq 0 \\
+        1,& \text{otherwise}
+    \end{cases}, \]
+        where $\&$ is the C bitwise ``and'' operator.
 
-	\[ \stirsnd n2 = 2^{n-1} - 1 \]
-	\[ \stirsnd n{n-1} = \binom n2 \]
-	\[ \stirsnd nk = \frac 1{k!} \sum_{j=0}^k(-1)^{k-j} \binom kj j^n \]
+        \[ \stirsnd n2 = 2^{n-1} - 1 \]
+        \[ \stirsnd n{n-1} = \binom n2 \]
+        \[ \stirsnd nk = \frac 1{k!} \sum_{j=0}^k(-1)^{k-j} \binom kj j^n \]
 }
 
 \SECTION{Bell Numbers} {
-	$\bell n$ is the number of equivalence relations on an $n$-set or, alternatively, the number of
-	partitions of an $n$-set. It holds that:
+    $\bell n$ is the number of equivalence relations on an $n$-set or, alternatively, the number of
+        partitions of an $n$-set. It holds that:
 
-	\[ \bell n = \sum_{k=0}^n \stirsnd nk \]
-	\[ \bell{n+1} = \sum_{k=0}^n\binom nk \bell k \]
-	\[ \bell n = \frac 1e \sum_{k=0}^\infty \frac{k^n}{k!} \]
-	\[ \bell{n+p} \equiv \bell n + \bell{n+1} \pmod p \]
+        \[ \bell n = \sum_{k=0}^n \stirsnd nk \]
+        \[ \bell{n+1} = \sum_{k=0}^n\binom nk \bell k \]
+        \[ \bell n = \frac 1e \sum_{k=0}^\infty \frac{k^n}{k!} \]
+        \[ \bell{n+p} \equiv \bell n + \bell{n+1} \pmod p \]
 }
 
 \SECTION{The Twelvefold Way} {
-	Let $A$ be a set of $m$ balls and $B$ be a set of $n$ boxes. The following table provides methods
-	to compute the number of equivalent functions $f:A\to B$ satisfying specific constraints.
-	
-	\begin{tabular}{|c|c||c|c|c|}
-		\hline
-		Balls & Boxes & Any & Injective & Surjective \\
-		\hline\hline
-		$\nequiv$ & $\nequiv$ & $\ds n^m$ & $\ds\frac{n!}{(n-m)!}$ & $\ds n!\stirsnd mn$ \\
-		\hline
-		$\nequiv$ & $\equiv$ & $\ds \sum_{k=0}^n \stirsnd mk$ & $\ds\delta_{m\leqslant n}$ &
-			$\ds\stirsnd mn$ \\
-		\hline
-		$\equiv$ & $\nequiv$ & $\ds\binom{m+n-1}{m}$ & $\ds\binom nm$ & $\ds\binom{m-1}{n-1}$ \\
-		\hline
-		$\equiv$ & $\equiv$ & {\bf(*)}$\ds\sum_{k=0}^n p(m,k)$ & $\ds\delta_{m\leqslant n}$ & 
-			{\bf(**)}$\ds p(m,n)$ \\
-		\hline
-	\end{tabular}
-	
-	{\bf(**)} is a definition and both {\bf(*)} and {\bf(**)} are very hard to compute. So do not
-	try to.
+    Let $A$ be a set of $m$ balls and $B$ be a set of $n$ boxes. The following table provides methods
+        to compute the number of equivalent functions $f:A\to B$ satisfying specific constraints.
+
+        \begin{tabular}{|c|c||c|c|c|}
+    \hline
+        Balls & Boxes & Any & Injective & Surjective \\
+        \hline\hline
+        $\nequiv$ & $\nequiv$ & $\ds n^m$ & $\ds\frac{n!}{(n-m)!}$ & $\ds n!\stirsnd mn$ \\
+        \hline
+        $\nequiv$ & $\equiv$ & $\ds \sum_{k=0}^n \stirsnd mk$ & $\ds\delta_{m\leqslant n}$ &
+        $\ds\stirsnd mn$ \\
+        \hline
+        $\equiv$ & $\nequiv$ & $\ds\binom{m+n-1}{m}$ & $\ds\binom nm$ & $\ds\binom{m-1}{n-1}$ \\
+        \hline
+        $\equiv$ & $\equiv$ & {\bf(*)}$\ds\sum_{k=0}^n p(m,k)$ & $\ds\delta_{m\leqslant n}$ & 
+        {\bf(**)}$\ds p(m,n)$ \\
+    \hline
+        \end{tabular}
+
+    {\bf(**)} is a definition and both {\bf(*)} and {\bf(**)} are very hard to compute. So do not
+    try to.
 }
 
 \SECTION{Lucca's Theorem} {
-	Let $n,k,p\in\NN$ and $p$ be a prime number. Then
-	\[ \binom nk \equiv \prod_{j=0}^\infty \binom{n_j}{k_j} \pmod p, \]
-	where $n_j$ and $k_j$ are the $j$-th digits of the numbers $n$ and $k$ in base
-	$p$, respectively.
+    Let $n,k,p\in\NN$ and $p$ be a prime number. Then
+        \[ \binom nk \equiv \prod_{j=0}^\infty \binom{n_j}{k_j} \pmod p, \]
+        where $n_j$ and $k_j$ are the $j$-th digits of the numbers $n$ and $k$ in base
+        $p$, respectively.
 }
 
 \SECTION{Derangement (Desarranjo)} {
     A derangement is a permutation of the elements of a set such that none of the elements appear in their original position.
 
-    Suppose that there are $n$ persons numbered $1, 2, \hdots, n$. Let there be $n$ hats also numbered $1, 2, \hdots, n$. 
-    We have to find the number of ways in which no one gets the hat having same number as his/her number. 
-    Let us assume that first person takes the hat $i$. There are $n - 1$ ways for the first person to choose the number $i$. Now there are 2 options:
+        Suppose that there are $n$ persons numbered $1, 2, \hdots, n$. Let there be $n$ hats also numbered $1, 2, \hdots, n$. 
+        We have to find the number of ways in which no one gets the hat having same number as his/her number. 
+        Let us assume that first person takes the hat $i$. There are $n - 1$ ways for the first person to choose the number $i$. Now there are 2 options:
 
-    \begin{itemize}
-        \item Person $i$ takes the hat of 1. Now the problem reduces to $n - 2$ persons and $n - 2$ hats.
+        \begin{itemize}
+    \item Person $i$ takes the hat of 1. Now the problem reduces to $n - 2$ persons and $n - 2$ hats.
         \item Person $i$ does not take the hat 1. This case is equivalent to solving the problem with $n - 1$ persons $n - 1$ hats (each of the remaining $n - 1$ people has precisely 1 forbidden choice from among the remaining $n - 1$ hats).
-    \end{itemize}
+        \end{itemize}
 
     From this, the following relation is derived:
 
-    $$d_n = (n-1) * (d_{n-1} + d_{n-2})$$
-    $$d_1 = 0$$
-    $$d_2 = 1$$
+        $$d_n = (n-1) * (d_{n-1} + d_{n-2})$$
+        $$d_1 = 0$$
+        $$d_2 = 1$$
 
-    Starting with $n = 0$, the numbers of derangements of $n$ are:
-    1, 0, 1, 2, 9, 44, 265, 1854, 14833, 133496, 1334961, 14684570, 176214841, 2290792932.
+        Starting with $n = 0$, the numbers of derangements of $n$ are:
+        1, 0, 1, 2, 9, 44, 265, 1854, 14833, 133496, 1334961, 14684570, 176214841, 2290792932.
 }
 
 \section{Strings}
 
 \SECTION{Knuth--Morris--Pratt Algorithm}{
-	\Csourcefile{kmp}
+    \Csourcefile{kmp}
 }
 
 \SECTION{Aho--Corasick Algorithm}{
-	\Csourcefile{ahocorasick}
+    \Csourcefile{ahocorasick}
 }
 
 \SECTION{Suffix Array and Longest Common Prefix (DC3)}{
-	\Csourcefile{suffixarray}
+    \Csourcefile{suffixarray}
 }
 
 \section{Geometry}
 
 \SECTION{Graham's Scan Algorithm}{
-	\Csourcefile{graham}
+    \Csourcefile{graham}
 }
 
 \SECTION{Minimum Enclosing Disc}{
-	\Csourcefile{mindisc}
+    \Csourcefile{mindisc}
 }
 
 \SECTION{Sweep Circle} {
-	\Csourcefile{sweepcircle}
+    \Csourcefile{sweepcircle}
 }
 
 \SECTION{Intersections} {
-	\Csourcefile{intersections}
+    \Csourcefile{intersections}
 }
 
 \SECTION{Lines} {
-	\Csourcefile{retas}
+    \Csourcefile{retas}
 }
 
 \SECTION{3D Geometry} {
-	\Csourcefile{geometria3D}
+    \Csourcefile{geometria3D}
 }
 
 \SECTION{Centroid} {
-	\Csourcefile{centroide}
+    \Csourcefile{centroide}
 }
 
 \SECTION{Voronoi} {
-	\Csourcefile{voronoi}
+    \Csourcefile{voronoi}
 }
 
 \section{Graphs}
 
 \SECTION{MaxFlow--MinCost} {
-	\Csourcefile{mcmf2}
+    \Csourcefile{mcmf2}
 }
 
 \SECTION{MaxFlow} {
-	\Csourcefile{maxflow}
+    \Csourcefile{maxflow}
 }
 
 \SECTION{Hopcroft--Karp} {
-	\Csourcefile{hopcroft}
+    \Csourcefile{hopcroft}
 }
 
 \SECTION{Maximum Match (Edmonds--Karp)} {
-	\Csourcefile{EdmondsMaximumMatch}
+    \Csourcefile{EdmondsMaximumMatch}
 }
 
 \SECTION{Stoer--Wagner} {
-	\Csourcefile{stoerwagner}
+    \Csourcefile{stoerwagner}
 }
 
 \SECTION{2-satisfability} {
-	\Csourcefile{2sat}
+    \Csourcefile{2sat}
 }
 
-\SECTION{rooted MST in digraph} {
-	\Csourcefile{mstdigraph}
+\SECTION{Rooted MST in digraph} {
+    \Csourcefile{mstdigraph}
 }
 
 \section{Data Structures}
 
 \SECTION{kd-tree} {
-	\Csourcefile{kdtree}
+    \Csourcefile{kdtree}
 }
 
 \SECTION{Binary Indexed Tree (BIT)} {
-	\Csourcefile{bit}
+    \Csourcefile{bit}
 }
 
 \SECTION{Longest Increasing Subsequence (LIS)} {
-	\Csourcefile{lis}
+    \Csourcefile{lis}
 }
 
 \SECTION{Manacher's Algorithm (Palindrome Finding)} {
-	\Csourcefile{manacher}
+    \Csourcefile{manacher}
 }
 
 \SECTION{Segment Tree (with Lazy Propagation)} {
-	\Csourcefile{lazypropag}
+    \Csourcefile{lazypropag}
 }
 
 \SECTION{Longest Common Ancestor (LCA)} {
-	\Csourcefile{lca}
+    \Csourcefile{lca}
 }
 
 \end{document}
